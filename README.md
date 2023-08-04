@@ -4,7 +4,7 @@
 
 ## Description
 
-Welcome to the classic Snake Game implemented in JavaScript! Control the snake, represented by a colorful block, and navigate it around the game board to eat food blocks (represented by red apples 🍎). As the snake eats the food, it grows longer, and the color of the food block is appended to its tail.
+Welcome to the classic Snake Game implemented in JavaScript! Control the snake, represented by a colorful block, and navigate it around the game board to eat random coloured food blocks. As the snake eats the food, it grows longer, and the color of the food block is appended to its tail.
 
 ## Demo
 
