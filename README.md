@@ -45,7 +45,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- The snake icon made by Freepik from www.flaticon.com.
 - Special thanks to the JavaScript community for the awesome language.
+- Thanks to the open-source libraries and frameworks used in this project, which accelerated development.
+- Appreciation to the online tutorials and resources that helped in learning and implementing game mechanics.
+- Thanks to the supportive developer communities on platforms like Stack Overflow for answering questions and offering guidance.
+- A shout-out to anyone who takes the time to play and enjoy this humble Snake Game 🐍.
 
 Let's play the 🐍 Snake Game 🍎 and have fun!
