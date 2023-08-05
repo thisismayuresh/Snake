@@ -16,11 +16,33 @@
             margin: 20px auto;
             background-color: #ddd;
         }
+
+        /* Style the arrow buttons */
+        #arrowButtons {
+            text-align: center;
+            margin: 20px auto;
+        }
+
+        #arrowButtons button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
     <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+    <!-- Add arrow buttons for mobile devices -->
+    <div id="arrowButtons" style="display: none;">
+        <button onclick="changeDirection('up')">&#8593; UP</button><br>
+        <button onclick="changeDirection('left')">&#8592; LEFT</button>
+        <button onclick="changeDirection('right')">&#8594; RIGHT</button><br>
+        <button onclick="changeDirection('down')">&#8595; DOWN</button>
+    </div>
+
 
     <script>
         // Get the canvas element
@@ -196,6 +218,38 @@
         // Start the game
         var gameLoop = setInterval(updateGame, 100);
         document.addEventListener("keydown", handleKeydown);
+
+        // Function to show arrow buttons on mobile devices
+        function showArrowButtons() {
+            var arrowButtonsDiv = document.getElementById("arrowButtons");
+            var isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (isMobileDevice) {
+                arrowButtonsDiv.style.display = "block";
+            } else {
+                arrowButtonsDiv.style.display = "none";
+            }
+        }
+
+        // Function to change the snake's direction when arrow buttons are clicked
+        function changeDirection(newDirection) {
+            switch (newDirection) {
+                case "up":
+                    if (direction !== "down") direction = "up";
+                    break;
+                case "down":
+                    if (direction !== "up") direction = "down";
+                    break;
+                case "left":
+                    if (direction !== "right") direction = "left";
+                    break;
+                case "right":
+                    if (direction !== "left") direction = "right";
+                    break;
+            }
+        }
+
+        // Call the function to show arrow buttons on mobile devices
+        showArrowButtons();
     </script>
 </body>
 
