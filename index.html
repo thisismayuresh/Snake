@@ -9,11 +9,15 @@
         body {
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
         }
 
         canvas {
             display: block;
-            margin: 20px auto;
             background-color: #ddd;
         }
 
@@ -33,7 +37,7 @@
 </head>
 
 <body>
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <canvas id="gameCanvas" width="600" height="600"></canvas>
 
     <!-- Add arrow buttons for mobile devices -->
     <div id="arrowButtons" style="display: none;">
@@ -43,14 +47,17 @@
         <button onclick="changeDirection('down')">&#8595; DOWN</button>
     </div>
 
-
     <script>
         // Get the canvas element
         var canvas = document.getElementById("gameCanvas");
         var context = canvas.getContext("2d");
 
         // Set up the initial game state
-        var gridSize = 20;
+        var gridSize = 40;  // Increase the grid size
+        var gridWidth = canvas.width / gridSize;
+        var gridHeight = canvas.height / gridSize;
+        var offsetX = (canvas.width % gridSize) / 2;
+        var offsetY = (canvas.height % gridSize) / 2;
         var snake = [{ x: 0, y: 0 }];
         var direction = "right";
         var food = createFood();
@@ -59,23 +66,40 @@
 
         // Function to create a random food with a random color
         function createFood() {
-            var foodX = Math.floor(Math.random() * (canvas.width / gridSize));
-            var foodY = Math.floor(Math.random() * (canvas.height / gridSize));
+            var foodX = Math.floor(Math.random() * gridWidth);
+            var foodY = Math.floor(Math.random() * gridHeight);
             return { x: foodX, y: foodY, color: getRandomColor() };
         }
 
         // Function to draw a cell
         function drawCell(x, y, color) {
             context.fillStyle = color;
-            context.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
+            context.fillRect(offsetX + x * gridSize, offsetY + y * gridSize, gridSize, gridSize);
             context.strokeStyle = "white";
-            context.strokeRect(x * gridSize, y * gridSize, gridSize, gridSize);
+            context.strokeRect(offsetX + x * gridSize, offsetY + y * gridSize, gridSize, gridSize);
+        }
+
+        // Function to draw the grid
+        function drawGrid() {
+            context.strokeStyle = "#ccc"; // Grid color
+            for (var x = 0; x <= canvas.width; x += gridSize) {
+                context.moveTo(x + offsetX, offsetY);
+                context.lineTo(x + offsetX, canvas.height - offsetY);
+            }
+            for (var y = 0; y <= canvas.height; y += gridSize) {
+                context.moveTo(offsetX, y + offsetY);
+                context.lineTo(canvas.width - offsetX, y + offsetY);
+            }
+            context.stroke();
         }
 
         // Function to draw the entire game board
         function drawGame() {
             // Clear the canvas
             context.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the grid
+            drawGrid();
 
             // Draw the snake
             snake.forEach((segment, index) => {
@@ -132,8 +156,8 @@
             if (
                 head.x < 0 ||
                 head.y < 0 ||
-                head.x >= canvas.width / gridSize ||
-                head.y >= canvas.height / gridSize ||
+                head.x >= gridWidth ||
+                head.y >= gridHeight ||
                 snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)
             ) {
                 // Game over
